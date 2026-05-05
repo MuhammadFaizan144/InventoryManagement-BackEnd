@@ -14,7 +14,9 @@ app.use(cors({ origin: ['http://localhost:5173', 'https://inventory-navy.vercel.
 
 // application routes
 app.use('/api/v1', rootRouter);
-
+app.get('/test', (req, res) => {  
+    res.json({ message: 'Test route is working!' });
+});
 app.use(notFound);
 app.use(globalErrorHandler);
 

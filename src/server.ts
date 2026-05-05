@@ -2,26 +2,16 @@ import mongoose from 'mongoose';
 import app from './app';
 import config from './config';
 
-// cache connection across serverless calls
-let isConnected = false;
-
-async function connectToMongoDB() {
-  if (isConnected) return;
-
+async function main() {
   try {
-    const db = await mongoose.connect(config.database_url as string);
-
-    isConnected = db.connections[0].readyState === 1;
-
-    console.log('✅ MongoDB connected');
+    await mongoose.connect(config.database_url as string);
+    console.log('MongoDB connected');
   } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    throw err;
+    console.log(err);
   }
 }
 
-// 👇 THIS is what Vercel needs
-export default async function handler(req: any, res: any) {
-  await connectToMongoDB();
-  return app(req, res);
-}
+main();
+
+// ❌ DO NOT listen on Vercel
+export default app;
