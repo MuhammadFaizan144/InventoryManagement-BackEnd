@@ -13,5 +13,4 @@ async function main() {
 
 main();
 
-// ❌ DO NOT listen on Vercel
 export default app;
